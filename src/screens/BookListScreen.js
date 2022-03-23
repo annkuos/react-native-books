@@ -5,7 +5,6 @@ import {
     FlatList,
     Image,
     StyleSheet,
-    Text,
 } from "react-native";
 import { ListItem } from "react-native-elements";
 
@@ -18,7 +17,6 @@ const BookListScreen = ({ navigation }) => {
 
     useEffect(() => {
         fetchBooks();
-        //console.log(books);
     }, []);
 
     return (
@@ -29,7 +27,7 @@ const BookListScreen = ({ navigation }) => {
                 onToggle={setFilterType}
             />
             <FlatList
-                data={books.items}
+                data={books}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => {
                     return (
