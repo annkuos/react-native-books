@@ -8,7 +8,9 @@ const Search = ({ placeholderText }) => {
     const { fetchBooks } = useContext(BookContext);
 
     const search = () => {
-        fetchBooks(searchText);
+        if (searchText && searchText != " ") {
+            fetchBooks(searchText);
+        }
     };
 
     return (
@@ -18,6 +20,11 @@ const Search = ({ placeholderText }) => {
                 onChangeText={(search) => setSearchText(search)}
                 value={searchText}
                 onBlur={search}
+                lightTheme={true}
+                containerStyle={{ backgroundColor: "white" }}
+                inputStyle={{ backgroundColor: "ghostwhite" }}
+                inputContainerStyle={{ backgroundColor: "white" }}
+                leftIconContainerStyle={{ backgroundColor: "white" }}
             />
         </View>
     );
