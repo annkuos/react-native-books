@@ -21,10 +21,10 @@ export const BooksContextProvider = ({ children }) => {
         console.log(filterType);
     }, [filterType]);
 
-    const fetchBooks = async () => {
+    const fetchBooks = async (searchTerm) => {
         try {
             const response = await server.get(
-                `/volumes?country=FI&q=pride+prejudice&${apiKey}`
+                `/volumes?country=FI&q=${searchTerm}&${apiKey}`
             );
             setBooks(response.data.items);
         } catch (err) {

@@ -11,16 +11,18 @@ import { ListItem } from "react-native-elements";
 import { BookContext } from "../context/BookContext";
 
 import ToggleSwitch from "../components/ToggleSwitch";
+import Search from "../components/SearchBar";
 
 const BookListScreen = ({ navigation }) => {
     const { books, fetchBooks, setFilterType } = useContext(BookContext);
 
     useEffect(() => {
-        fetchBooks();
+        fetchBooks("pride prejudice");
     }, []);
 
     return (
         <View style={styles.container}>
+            <Search placeholderText={"Search books"} />
             <ToggleSwitch
                 option1={"Ebooks"}
                 option2={"Audiobooks"}
