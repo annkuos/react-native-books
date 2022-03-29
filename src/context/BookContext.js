@@ -4,8 +4,12 @@ import server from "../api/server";
 export const BookContext = createContext({
     books: [],
     book: [],
+    bookshelf: {},
+    bookshelfVolumes: [],
     fetchBooks: () => {},
     fetchBook: () => {},
+    fetchBookshelf: () => {},
+    fetchBookshelfVolumes: () => {},
     filterType: [],
     setFilterType: () => {},
 });
@@ -16,6 +20,8 @@ export const BooksContextProvider = ({ children }) => {
     const [books, setBooks] = useState([]);
     const [book, setBook] = useState([]);
     const [filterType, setFilterType] = useState([]);
+    const [bookshelf, setBookshelf] = useState({});
+    const [bookshelfVolumes, setBookshelfVolumes] = useState([]);
 
     useEffect(() => {
         console.log(filterType);
@@ -43,16 +49,53 @@ export const BooksContextProvider = ({ children }) => {
         }
     };
 
+    const fetchBookshelf = async (userId, shelfId) => {
+        try {
+            const response = await server.get(
+                `/users/${userId}/bookshelves/${shelfId}?key=${apiKey}`
+            );
+            setBookshelf(response.data);
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    const fetchBookshelfVolumes = async (userId, shelfId) => {
+        try {
+            const response = await server.get(
+                `/users/${userId}/bookshelves/${shelfId}/volumes?key=${apiKey}`
+            );
+            setBookshelfVolumes(response.data.items);
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
     const value = useMemo(
         () => ({
             books,
             book,
+            bookshelf,
+            bookshelfVolumes,
             fetchBooks,
             fetchBook,
+            fetchBookshelf,
+            fetchBookshelfVolumes,
             filterType,
             setFilterType,
         }),
-        [books, book, fetchBooks, fetchBook, filterType, setFilterType]
+        [
+            books,
+            book,
+            bookshelf,
+            bookshelfVolumes,
+            fetchBooks,
+            fetchBook,
+            fetchBookshelf,
+            fetchBookshelfVolumes,
+            filterType,
+            setFilterType,
+        ]
     );
 
     return (

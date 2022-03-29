@@ -12,6 +12,7 @@ import { BookContext } from "../context/BookContext";
 
 import ToggleSwitch from "../components/ToggleSwitch";
 import Search from "../components/SearchBar";
+import BookDisplay from "../components/BookDisplay";
 
 const BookListScreen = ({ navigation }) => {
     const { books, fetchBooks, setFilterType } = useContext(BookContext);
@@ -32,30 +33,7 @@ const BookListScreen = ({ navigation }) => {
                 data={books}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => {
-                    return (
-                        <TouchableOpacity
-                            key={item?.id}
-                            onPress={() =>
-                                navigation.navigate("BookDetails", {
-                                    id: item.id,
-                                    rating: item.volumeInfo?.averageRating,
-                                    ratingCount: item.volumeInfo?.ratingsCount,
-                                })
-                            }
-                        >
-                            <ListItem>
-                                <ListItem.Content>
-                                    <Image
-                                        style={{ width: 150, height: 250 }}
-                                        source={{
-                                            uri: item?.volumeInfo?.imageLinks
-                                                ?.smallThumbnail,
-                                        }}
-                                    />
-                                </ListItem.Content>
-                            </ListItem>
-                        </TouchableOpacity>
-                    );
+                    return <BookDisplay navigation={navigation} item={item} />;
                 }}
             />
         </View>
